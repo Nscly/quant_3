@@ -23,10 +23,10 @@ def parse_args():
 
 def parse_basic_args():
     parser = argparse.ArgumentParser(description="Run GAT.")
-    parser.add_argument('--data', type=str, default="Taiwan_model_data_10_best.pickle",
+    parser.add_argument('--data', type=str, default="stock_data_processed.pickle",
                         help='Data path.')
     parser.add_argument('--model', type=str, default="CAT",
-                        help='Model for training, choose from [CG ,CAT,CPool].')
+                        help='Model for training, choose from [CG, CAT, CPool].')
     parser.add_argument('--epochs', type=int, default=20,
                         help='Number of epochs.')
     parser.add_argument('--dual_attention', type=bool, default=False,
@@ -43,10 +43,10 @@ def parse_basic_args():
                         help='loss weight for cls loss.')
     parser.add_argument('--gamma', type=float, default=1,
                         help='loss weight for rank loss.')
-    parser.add_argument('--device', type=str, default="cuda:1",
-                        help='Device id')
+    parser.add_argument('--device', type=str, default="cpu",
+                        help='Device id (use "cpu" or "cuda:0")')
     parser.add_argument('--use_gru', type=bool, default=False,
-                        help='Whther use gru')
+                        help='Whether use gru')
     parser.add_argument('--week_num', type=int, default=3,
                         help='Number of weeks')
     parser.add_argument('--weight', type=float, default=0.5,
