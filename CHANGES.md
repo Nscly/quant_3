@@ -1,5 +1,109 @@
 # 代码修复和改进总结
 
+## 环境配置和依赖安装
+
+### 推荐使用虚拟环境
+
+为了避免包冲突，强烈建议在虚拟环境中运行此项目：
+
+#### 方法1：使用 venv（Python内置）
+
+```bash
+# 创建虚拟环境
+python3 -m venv venv
+
+# 激活虚拟环境
+# Linux/Mac:
+source venv/bin/activate
+# Windows:
+# venv\Scripts\activate
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 退出虚拟环境（完成工作后）
+deactivate
+```
+
+#### 方法2：使用 conda
+
+```bash
+# 创建虚拟环境
+conda create -n fingat python=3.8
+
+# 激活虚拟环境
+conda activate fingat
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 退出虚拟环境
+conda deactivate
+```
+
+### 必需的Python包
+
+以下是项目依赖的所有包（已包含在 `requirements.txt` 中）：
+
+| 包名 | 版本要求 | 用途 |
+|------|---------|------|
+| `pandas` | >=2.0.0 | 数据处理和分析 |
+| `numpy` | >=1.16.4 | 数值计算和数组操作 |
+| `scikit-learn` | >=1.0.0 | 数据标准化和评估指标 |
+| `torch` | >=1.0.0 | 深度学习框架 |
+| `torch-geometric` | >=2.0.0 | 图神经网络库 |
+| `matplotlib` | >=3.0.0 | 可视化（可选） |
+
+### 安装步骤
+
+```bash
+# 1. 克隆仓库
+git clone <repository-url>
+cd <repository-name>
+
+# 2. 创建并激活虚拟环境（推荐）
+python3 -m venv venv
+source venv/bin/activate  # Linux/Mac
+# 或 venv\Scripts\activate  # Windows
+
+# 3. 安装依赖
+pip install -r requirements.txt
+
+# 4. 数据预处理
+python clean_data.py
+
+# 5. 训练模型
+python train.py --model CAT --epochs 20 --device cpu
+```
+
+### CPU vs GPU 训练
+
+- **CPU训练**（默认）：适合小规模测试和开发
+  ```bash
+  python train.py --device cpu
+  ```
+
+- **GPU训练**：需要CUDA支持，训练速度更快
+  ```bash
+  # 确保安装了GPU版本的PyTorch
+  pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+  
+  # 使用GPU训练
+  python train.py --device cuda:0
+  ```
+
+### 验证安装
+
+运行测试脚本验证所有依赖都已正确安装：
+
+```bash
+python test_models.py
+```
+
+如果所有测试通过，说明环境配置成功！
+
+---
+
 ## 主要问题及解决方案
 
 ### 1. ⭐ 图构建功能缺失（最关键）
