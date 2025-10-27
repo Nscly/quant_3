@@ -1,0 +1,132 @@
+{
+  "description": "FinGAT 训练配置示例",
+  
+  "快速测试": {
+    "model": "CG",
+    "epochs": 5,
+    "dim": 16,
+    "lr": 0.05,
+    "device": "cpu",
+    "description": "5分钟快速验证，适合测试代码是否正常运行"
+  },
+  
+  "标准训练_CAT": {
+    "model": "CAT",
+    "epochs": 20,
+    "dim": 32,
+    "lr": 0.01,
+    "l2": 1e-6,
+    "alpha": 1.0,
+    "beta": 1.0,
+    "gamma": 1.0,
+    "week_num": 3,
+    "use_gru": false,
+    "device": "cuda:0",
+    "description": "推荐配置，性能和速度平衡"
+  },
+  
+  "高性能_CAT_GRU": {
+    "model": "CAT",
+    "epochs": 50,
+    "dim": 64,
+    "lr": 0.005,
+    "l2": 1e-5,
+    "alpha": 1.0,
+    "beta": 1.0,
+    "gamma": 0.5,
+    "week_num": 4,
+    "use_gru": true,
+    "device": "cuda:0",
+    "description": "追求最佳性能，需要GPU和较长训练时间"
+  },
+  
+  "回归优先": {
+    "model": "CAT",
+    "epochs": 30,
+    "dim": 32,
+    "lr": 0.01,
+    "alpha": 2.0,
+    "beta": 0.5,
+    "gamma": 0.5,
+    "device": "cuda:0",
+    "description": "重点优化收益率预测精度"
+  },
+  
+  "分类优先": {
+    "model": "CAT",
+    "epochs": 30,
+    "dim": 32,
+    "lr": 0.01,
+    "alpha": 0.5,
+    "beta": 2.0,
+    "gamma": 1.0,
+    "device": "cuda:0",
+    "description": "重点优化涨跌预测准确率"
+  },
+  
+  "排序优先": {
+    "model": "CAT",
+    "epochs": 30,
+    "dim": 32,
+    "lr": 0.01,
+    "alpha": 0.5,
+    "beta": 0.5,
+    "gamma": 2.0,
+    "device": "cuda:0",
+    "description": "重点优化Top-K推荐质量"
+  },
+  
+  "图池化模型": {
+    "model": "CPool",
+    "epochs": 30,
+    "dim": 32,
+    "lr": 0.01,
+    "l2": 1e-5,
+    "alpha": 1.0,
+    "beta": 1.0,
+    "gamma": 1.0,
+    "week_num": 3,
+    "use_gru": true,
+    "device": "cuda:0",
+    "description": "使用图池化的高级模型，计算较慢但可能更准确"
+  },
+  
+  "超参数搜索": {
+    "learning_rate_range": [0.001, 0.005, 0.01, 0.05, 0.1],
+    "hidden_dim_range": [16, 32, 64],
+    "l2_range": [0, 1e-6, 1e-5, 1e-4],
+    "alpha_range": [0.5, 1.0, 2.0],
+    "beta_range": [0.5, 1.0, 2.0],
+    "gamma_range": [0.1, 0.5, 1.0, 2.0],
+    "description": "超参数搜索空间建议"
+  },
+  
+  "命令行示例": {
+    "快速测试": "python train.py --model CG --epochs 5 --device cpu",
+    "标准训练": "python train.py --model CAT --epochs 20 --dim 32 --lr 0.01 --device cuda:0",
+    "完整训练": "python train.py --model CAT --epochs 50 --dim 64 --lr 0.005 --l2 1e-5 --alpha 1 --beta 1 --gamma 0.5 --week_num 4 --use_gru True --device cuda:0",
+    "回归优先": "python train.py --model CAT --alpha 2.0 --beta 0.5 --gamma 0.5",
+    "使用脚本": "./quick_train.sh CAT cuda:0 20"
+  },
+  
+  "评估指标说明": {
+    "MAE": "Mean Absolute Error - 回归预测的平均绝对误差，越小越好",
+    "Accuracy": "分类准确率 - 涨跌预测正确的比例，越高越好",
+    "MRR": "Mean Reciprocal Rank - 平均倒数排名，越高越好，范围0-1",
+    "Precision@K": "Top-K推荐精度 - 推荐的K支股票中实际表现好的比例，越高越好",
+    "最佳指标": "通常以MRR为主要指标选择最佳模型"
+  },
+  
+  "硬件需求": {
+    "CPU训练": {
+      "内存": "8GB+",
+      "时间": "~30分钟 (10 epochs)",
+      "适用": "快速测试和小规模实验"
+    },
+    "GPU训练": {
+      "显存": "4GB+",
+      "时间": "~5-10分钟 (20 epochs)",
+      "适用": "正式训练和超参数搜索"
+    }
+  }
+}
